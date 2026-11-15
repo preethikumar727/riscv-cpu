@@ -1,4 +1,5 @@
 // self checking testbench for alu.sv
+`timescale 1ns/1ps
 
 module alu_tb;
 
