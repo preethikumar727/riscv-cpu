@@ -7,7 +7,7 @@
 //synchronous reset (active low) clears all the registers
 
 
-module regfile (
+module regfile # (parameter BYPASS = 1 )(       // BYPASS =1 for the pipeline , 0 for single-cycle
     input logic         clk,
     input logic         rst_n,          //reset, active low -reset when when signal is 0
     input logic         we,             // write enable
@@ -41,14 +41,15 @@ always_ff @(posedge clk) begin
 // otherwise, return the stored value
 // conditional operator: condition ? vaule_if_true : value_if_false
 
-assign rs1_data = (rs1 == 5'd0)          ? 32'd0   :                // checks if reading x0 , output is 0
-                  (we && (rd == rs1))    ? rd_data : regs[rs1] ;
+ assign rs1_data = (rs1 == 5'd0)                    ? 32'd0   :
+                      (BYPASS && we && (rd == rs1))    ? rd_data :
+                                                         regs[rs1];
 
-assign rs2_data = (rs2 == 5'd0)          ? 32'd0   :
-                  (we && (rd == rs2))    ? rd_data : regs[rs2] ;
+assign rs2_data = (rs2 == 5'd0)                    ? 32'd0   :
+                      (BYPASS && we && (rd == rs2))    ? rd_data :
+                                                         regs[rs2];
 
 
 endmodule
 
 
-//
