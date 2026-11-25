@@ -1,0 +1,34 @@
+00A00093  // 0:   addi x1, x0, 10      x1 = 10
+00300113  // 4:   addi x2, x0, 3       x2 = 3
+002081B3  // 8:   add  x3, x1, x2      x3 = 13
+40208233  // 12:  sub  x4, x1, x2      x4 = 7
+0020F2B3  // 16:  and  x5, x1, x2      x5 = 2
+0020E333  // 20:  or   x6, x1, x2      x6 = 11
+0020C3B3  // 24:  xor  x7, x1, x2      x7 = 9
+00112433  // 28:  slt  x8, x2, x1      x8 = 1  (3 < 10)
+002094B3  // 32:  sll  x9, x1, x2      x9 = 80 (10 << 3)
+FF800513  // 36:  addi x10, x0, -8     x10 = -8
+40155593  // 40:  srai x11, x10, 1     x11 = -4
+01C55613  // 44:  srli x12, x10, 28    x12 = 15
+000026B7  // 48:  lui  x13, 0x2        x13 = 0x2000 (start of data memory)
+0036A023  // 52:  sw   x3, 0(x13)      mem[0x2000] = 13
+0006A703  // 56:  lw   x14, 0(x13)     x14 = 13
+00A68223  // 60:  sb   x10, 4(x13)     mem[0x2004] = 0xF8 (one byte)
+00468783  // 64:  lb   x15, 4(x13)     x15 = -8 (signed byte)
+0046C803  // 68:  lbu  x16, 4(x13)     x16 = 248 (unsigned byte)
+00A69423  // 72:  sh   x10, 8(x13)     mem[0x2008] = 0xFFF8 (half-word)
+00869B83  // 76:  lh   x23, 8(x13)     x23 = -8 (signed half)
+0086DC03  // 80:  lhu  x24, 8(x13)     x24 = 65528 (unsigned half)
+00000893  // 84:  addi x17, x0, 0      sum = 0
+00500913  // 88:  addi x18, x0, 5      i = 5
+012888B3  // 92:  add  x17, x17, x18   loop: sum = sum + i
+FFF90913  // 96:  addi x18, x18, -1    i = i - 1
+FE091CE3  // 100: bne  x18, x0, -8     if i != 0, go back to 92
+00000463  // 104: beq  x0, x0, 8       always jump over the next instruction
+06300993  // 108: addi x19, x0, 99     SKIPPED (x19 must stay 0)
+010000EF  // 112: jal  x1, 16          call function at 128, x1 = 116
+00700A93  // 116: addi x21, x0, 7      runs after the function returns
+00000B17  // 120: auipc x22, 0         x22 = PC = 120
+00000073  // 124: ecall                stop the program
+02A00A13  // 128: addi x20, x0, 42     function body
+00008067  // 132: jalr x0, 0(x1)       return to 116
